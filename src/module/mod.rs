@@ -29,7 +29,7 @@ fn read_module_name() -> String {
 
     io::stdin()
         .read_line(&mut module_name)
-        .expect("Failed to read line");
+        .expect("Failed to module name");
 
     return module_name;
 }
