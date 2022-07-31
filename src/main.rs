@@ -9,12 +9,14 @@ fn main() {
         .subcommand_required(true)
         .subcommand(
             Command::new("module")
+                .visible_alias("m")
                 .about("Creates new module")
                 .arg(arg!([path] "Path to parent folder")
                     .default_value("./")),
         )
         .subcommand(
             Command::new("branch")
+                .visible_alias("b")
                 .about("Creates new branch from trunk"),
         )
         .get_matches();
