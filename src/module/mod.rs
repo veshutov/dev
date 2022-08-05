@@ -31,5 +31,5 @@ fn read_module_name() -> String {
         .read_line(&mut module_name)
         .expect("Failed to module name");
 
-    return module_name;
+    return module_name.trim().to_owned();
 }
