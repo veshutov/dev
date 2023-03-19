@@ -1,7 +1,6 @@
 use clap::{arg, command, Command};
 
-mod branch;
-
+mod arc;
 mod module;
 
 fn main() {
@@ -17,7 +16,13 @@ fn main() {
         .subcommand(
             Command::new("branch")
                 .visible_alias("b")
-                .about("Creates new branch from trunk"),
+                .about("Creates new branch from trunk")
+                .arg(arg!([name] "Branch name")),
+        )
+        .subcommand(
+            Command::new("rebase")
+                .visible_alias("r")
+                .about("Rebases current branch on trunk"),
         )
         .get_matches();
 
@@ -26,8 +31,12 @@ fn main() {
             let path = sub_matches.get_one::<String>("path").unwrap();
             module::create_module(&path)
         }
-        Some(("branch", _)) => {
-            branch::create_new_branch_from_trunk()
+        Some(("branch", sub_matches)) => {
+            let name = sub_matches.get_one::<String>("name").unwrap();
+            arc::create_new_branch_from_trunk(name)
+        }
+        Some(("rebase", _)) => {
+            arc::rebase_current_branch_on_trunk()
         }
         _ => unreachable!("Exhausted list of subcommands and subcommand_required prevents `None`"),
     }
